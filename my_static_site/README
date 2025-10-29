@@ -1,5 +1,82 @@
-copy all my directory on one file
-and then on terminal , 
+my-static-website/
+│
+├── index.html          ← Your main web page
+├── style.css           ← (Optional) Your CSS styles
+├── nginx.conf          ← Custom Nginx configuration[Tells Nginx how to serve your files (routes, ports, etc.)]
+└── Dockerfile          ← Instructions to build your Docker image
+
 docker build -t my_static_site .
 and it create docker image
 docker run -d -p 8080:80 --name my_first_dock my_static_site
+http://localhost:8080
+docker ps                         (list containers)
+docker stop my_first_dock         (stop it)
+docker start my_first_dock        (start again)
+docker rm my_first_dock           (remove it)
+docker logs my_first_dock         (see logs)
+docker exec -it my_first_dock sh  (open shell inside container)
+
+#####nginx.conf explanation
+events {}
+
+http {
+    server {
+        listen 80;
+        server_name localhost;
+
+        # The root directory Nginx will serve files from
+        root /usr/share/nginx/html;
+        index index.html;
+
+        # Optional: log configuration
+        access_log /var/log/nginx/access.log;
+        error_log /var/log/nginx/error.log;
+
+        # Handle requests
+        location / {
+            try_files $uri $uri/ =404;
+        }
+    }
+}
+Explanation:
+
+events {} → Required section (can be empty in simple configs).
+
+http {} → Starts HTTP configuration block.
+
+server {} → Defines a virtual server (your site).
+
+listen 80; → Listens on port 80 (default HTTP port).
+
+root /usr/share/nginx/html; → Directory where Nginx will look for files (this is where your index.html will go inside the container).
+
+try_files $uri $uri/ =404; → If file not found, return a 404 error.
+
+access_log, error_log → Optional logs (good for debugging).
+
+#####Dockerfile Explained
+
+# Step 1: Use the official Nginx image
+FROM nginx:alpine
+
+# Step 2: Copy your static website files into the Nginx html directory
+COPY index.html /usr/share/nginx/html/
+COPY style.css /usr/share/nginx/html/
+
+# Step 3: Copy your custom nginx.conf to override default config
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Step 4: Expose port 80 for web traffic
+EXPOSE 80
+
+# Step 5: Start Nginx automatically
+CMD ["nginx", "-g", "daemon off;"]
+
+Explanation:
+Line	Meaning
+FROM nginx:alpine	Start with a lightweight Nginx image as the base.
+COPY index.html ...	Copy your web files into the container’s web directory.
+COPY nginx.conf ...	Replace the default Nginx config with yours.
+EXPOSE 80	Tells Docker which port the container listens on.
+CMD	Runs Nginx when the container starts.
+
