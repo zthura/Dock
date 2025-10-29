@@ -1,0 +1,5 @@
+copy all my directory on one file
+and then on terminal , 
+docker build -t my_static_site .
+and it create docker image
+docker run -d -p 8080:80 --name my_first_dock my_static_site
