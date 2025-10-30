@@ -1,0 +1,14 @@
+app1/Dockerfile:
+
+FROM node:18
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm install express
+COPY server.js .
+
+EXPOSE 3000
+CMD ["node", "server.js"]
+
+
+app2/Dockerfile → same as app1 (just change the folder).
