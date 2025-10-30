@@ -1,0 +1,35 @@
+Step 6: Run the Project
+
+Build and start containers:
+
+docker compose up --build
+
+
+Access the app in your browser:
+
+http://localhost:8080
+
+
+NGINX will reverse proxy to Flask.
+
+Flask connects to MySQL.
+
+Data is persisted in a Docker volume.
+
+Step 7: Verify Networking and Volumes
+
+Check Docker containers:
+
+docker ps
+
+
+Inspect the network:
+
+docker network ls
+docker network inspect flask_mysql_nginx_app-network
+
+
+Check volumes:
+
+docker volume ls
+docker volume inspect flask_mysql_nginx_db_data
