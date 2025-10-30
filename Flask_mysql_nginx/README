@@ -1,0 +1,13 @@
+flask_mysql_nginx/
+│
+├── app/
+│   ├── templates/
+│   │   └── index.html
+│   ├── app.py
+│   ├── requirements.txt
+│
+├── nginx/
+│   └── default.conf
+│
+├── docker-compose.yml
+└── README.md
