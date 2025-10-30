@@ -1,0 +1,42 @@
+docker-compose.yml:
+ဒီကစမယ်
+version: '3.9'
+
+services:
+  flask-app:
+    build: ./app
+    container_name: flask-app
+    restart: always
+    networks:
+      - app-network
+    depends_on:
+      - mysql-db
+
+  mysql-db:
+    image: mysql:8.1
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: flaskdb
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - "8080:80"
+    networks:
+      - app-network
+    depends_on:
+      - flask-app
+
+volumes:
+  db_data:
+
+networks:
+  app-network:
+    driver: bridge
