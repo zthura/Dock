@@ -1,1 +1,15 @@
-Nginx_loadbalancer with docker
+docker-nginx-lb/
+│
+├── app1/
+│   ├── Dockerfile
+│   └── server.js
+│
+├── app2/
+│   ├── Dockerfile
+│   └── server.js
+│
+├── nginx/
+│   ├── nginx.conf
+│   └── Dockerfile
+│
+└── docker-compose.yml
