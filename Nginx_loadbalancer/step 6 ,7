@@ -1,0 +1,21 @@
+Step 6: Build & Run
+docker-compose up --build
+Open browser: http://localhost:8080
+
+Refresh multiple times → you will see App 1 and App 2 responses alternating.
+
+✅ Step 7: Verify
+Check running containers:
+
+bash
+Copy code
+docker ps
+Test load balancing:
+
+bash
+Copy code
+curl http://localhost:8080
+curl http://localhost:8080
+curl http://localhost:8080
+You should see responses from both apps in a round-robin manner.
+
