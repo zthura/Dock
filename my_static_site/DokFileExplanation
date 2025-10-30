@@ -1,0 +1,27 @@
+This Dockerfile creates a lightweight web server using Nginx to serve static files. Here's a simple breakdown of each line:
+
+🐳 Line-by-Line Explanation
+FROM nginx:stable-alpine
+- Base image: Uses the official Nginx image built on Alpine Linux (a tiny, fast Linux distro).
+- Why Alpine? It's minimal, which makes the final image smaller and faster.
+COPY site/ /usr/share/nginx/html
+- Copies your website files (HTML, CSS, JS, etc.) from the local site/ folder into Nginx’s default web directory.
+- This is where Nginx looks for files to serve.
+# Default nginx.conf from image is fine for this simple project
+- Comment: No custom configuration is needed. The default Nginx settings are enough to serve static files.
+EXPOSE 80
+- Opens port 80 on the container so it can receive HTTP traffic.
+- This is the standard web port used by browsers.
+
+🚀 What This Dockerfile Does
+It builds a container that:
+- Runs Nginx on Alpine Linux
+- Serves static content from the site/ folder
+- Listens for web traffic on port 80
+You can run it with:
+docker build -t my-nginx-site .
+docker run -p 8080:80 my-nginx-site
+
+
+Then visit http://localhost:8080 to see your site!
+Let me know if you want to add custom config, enable HTTPS, or deploy it to the cloud.
