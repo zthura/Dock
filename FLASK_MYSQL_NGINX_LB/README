@@ -17,3 +17,19 @@ flask_mysql_nginx_lb/
     ├── app.py                   # Flask App 2 code (same as App 1 with app_name="App 2")
     ├── requirements.txt         # Python dependencies (same as App 1)
     └── Dockerfile               # Dockerfile for Flask App 2
+
+          ┌──────────────────────────────┐
+          │       NGINX Load Balancer    │
+          │       Port 8080 on Host      │
+          └──────────────┬───────────────┘
+                         │
+          ┌──────────────┴───────────────┐
+          │                              │
+    ┌──────────────┐                ┌──────────────┐
+    │  Flask App 1 │                │  Flask App 2 │
+    │  (Port 5000) │                │  (Port 5000) │
+    └──────────────┘                └──────────────┘
+                         │
+                   ┌──────────────┐
+                   │   MySQL DB   │
+                   └──────────────┘
